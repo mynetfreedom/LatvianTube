@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Full-screen playback surface. The WebView is added programmatically in
+  PlaybackActivity so it can be torn down explicitly in onDestroy; leaving a
+  WebView to be garbage-collected is a known leak source.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/playback_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <TextView
+        android:id="@+id/playback_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:padding="24dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:background="#66000000" />
+
+</FrameLayout>

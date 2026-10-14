@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  LatvianTube — base (Latvian) strings.
+
+  Latvian is the DEFAULT locale here, not a translation overlay. That inverts the
+  usual Android arrangement on purpose: the app's audience is Latvian-speaking,
+  and treating Latvian as the base means a missing string falls back to Latvian
+  rather than to English.
+
+  This is a direct response to a defect found in SmartTube (see ANALYSIS.md,
+  evidence group E6): Latvian there is only ~120 of 748 base strings, so roughly
+  84% of its UI silently falls back to English even when the device is set to
+  Latvian. There is no completeness check, so the shortfall is invisible.
+-->
+<resources>
+
+    <string name="app_name" translatable="false">LatvianTube</string>
+    <string name="browse_title">LatvianTube</string>
+
+    <!-- Browse rows -->
+    <string name="row_empty_filtered">nav latviešu video</string>
+
+    <!-- Search -->
+    <string name="search_row_title">Meklēt</string>
+    <string name="search_hint">Meklēt latviešu video</string>
+    <string name="search_no_results">Nekas netika atrasts</string>
+    <string name="search_results_header">Rezultāti: %1$d</string>
+
+    <!-- Playback -->
+    <string name="playback_missing_id">Nav norādīts video ID</string>
+
+    <!-- Errors -->
+    <string name="error_no_network">Nav interneta savienojuma</string>
+    <string name="error_channel_load">Neizdevās ielādēt kanālu</string>
+    <string name="error_search_failed">Meklēšana neizdevās</string>
+    <string name="error_related_failed">Neizdevās ielādēt saistītos video</string>
+
+    <!-- Explanation of the language filter, shown in the About/settings surface -->
+    <string name="about_filter_title">Kā tiek atlasīts saturs</string>
+    <string name="about_filter_body">LatvianTube rāda tikai video latviešu valodā. YouTube nesniedz uzticamu valodas lauku, tāpēc katrs video tiek novērtēts pēc vairākām pazīmēm: latviešu diakritiskajām zīmēm, latviešu palīgvārdiem un piederības koptajam kanālu sarakstam. Video kirilicā tiek noraidīti.</string>
+
+</resources>

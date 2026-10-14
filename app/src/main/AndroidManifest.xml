@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!--
+      Android TV declaration.
+
+      android.software.leanback required=true is what makes this a TV-only app:
+      without a touchscreen requirement being explicitly waived, the Play Store
+      would also offer it to phones, where the Leanback UI is unusable.
+    -->
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:banner="@drawable/app_banner"
+        android:icon="@drawable/app_icon"
+        android:label="@string/app_name"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme.Leanback">
+
+        <!--
+          The one launcher entry. LEANBACK_LAUNCHER puts it on the TV home screen;
+          LAUNCHER is kept so the app can also be started from adb and from
+          non-Leanback launchers during development.
+        -->
+        <activity
+            android:name=".ui.browse.BrowseActivity"
+            android:exported="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection|keyboard|keyboardHidden|navigation"
+            android:screenOrientation="unspecified">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.search.SearchActivity"
+            android:exported="false"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection|keyboard|keyboardHidden|navigation"
+            android:screenOrientation="unspecified" />
+
+        <activity
+            android:name=".ui.playback.PlaybackActivity"
+            android:exported="false"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|layoutDirection|keyboard|keyboardHidden|navigation"
+            android:screenOrientation="unspecified"
+            android:launchMode="singleTop" />
+
+    </application>
+
+</manifest>

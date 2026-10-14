@@ -1,0 +1,70 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'lv.latviantube'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'lv.latviantube'
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName '1.0.0'
+
+        // The app is Latvian-only by design; these are defaults, and
+        // InnerTubeClient pins hl/gl per request regardless of device locale.
+        resourceConfigurations += ['lv', 'en']
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    lint {
+        // Latvian is the base locale here, so the usual "missing translation"
+        // warnings for every other language do not apply.
+        disable 'MissingTranslation', 'ExtraTranslation'
+        abortOnError false
+    }
+
+    packaging {
+        resources.excludes += ['META-INF/*.kotlin_module']
+    }
+}
+
+dependencies {
+    // Android TV / Leanback. Unlike SmartTube we use the stock artifacts —
+    // its in-tree Leanback and Fragment forks exist to support minSdk 17 and
+    // to patch TV focus behaviour for hardware from 2013.
+    implementation 'androidx.leanback:leanback:1.0.0'
+    implementation 'androidx.leanback:leanback-preference:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core:1.12.0'
+
+    // InnerTube transport.
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+
+    // Thumbnail loading.
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+
+    // WebViewAssetLoader — serves the bundled player page over a real HTTPS
+    // origin. Required for the YouTube IFrame API, which rejects file:// origins
+    // with error 153. See ANALYSIS.md §E8.
+    implementation 'androidx.webkit:webkit:1.8.0'
+}

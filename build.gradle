@@ -1,0 +1,14 @@
+// LatvianTube — root build file.
+//
+// AGP 8.x / Gradle 8.x, matching the compileSdk 34 that SmartTube targets while
+// dropping the Java-8-only, minSdk-17-era constraint that forces SmartTube to
+// pin okhttp to 3.12.13 and fork Leanback in-tree. LatvianTube starts at
+// minSdk 21, the floor for the F-Droid flavor of SmartTube.
+
+plugins {
+    id 'com.android.application' version '8.1.4' apply false
+}
+
+tasks.register('clean', Delete) {
+    delete rootProject.layout.buildDirectory
+}

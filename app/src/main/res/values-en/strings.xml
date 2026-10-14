@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- English translation. Present for development and for non-Latvian reviewers;
+     Latvian in values/ remains the fallback of record. -->
+<resources>
+
+    <string name="browse_title">LatvianTube</string>
+
+    <string name="row_empty_filtered">no Latvian video</string>
+
+    <string name="search_row_title">Search</string>
+    <string name="search_hint">Search Latvian video</string>
+    <string name="search_no_results">Nothing found</string>
+    <string name="search_results_header">Results: %1$d</string>
+
+    <string name="playback_missing_id">No video ID supplied</string>
+
+    <string name="error_no_network">No internet connection</string>
+    <string name="error_channel_load">Could not load channel</string>
+    <string name="error_search_failed">Search failed</string>
+    <string name="error_related_failed">Could not load related videos</string>
+
+    <string name="about_filter_title">How content is selected</string>
+    <string name="about_filter_body">LatvianTube shows only video in the Latvian language. YouTube does not supply a dependable language field, so every video is scored on several signals: Latvian diacritics, Latvian function words, and membership of the curated channel registry. Videos in Cyrillic are rejected.</string>
+
+</resources>

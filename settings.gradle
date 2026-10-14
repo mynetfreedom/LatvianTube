@@ -1,0 +1,25 @@
+// LatvianTube — Gradle settings.
+//
+// Deliberately a single-module build. SmartTube splits UI (`smarttubetv`) from
+// domain (`common`) and hides its YouTube layer in two git submodules; that
+// structure exists to serve three distribution flavors and a swappable
+// frontend, neither of which LatvianTube needs. See ANALYSIS.md.
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'LatvianTube'
+include ':app'

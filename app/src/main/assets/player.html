@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<!--
+  LatvianTube embedded player.
+
+  Plays one video through YouTube's official IFrame Player API. See
+  PlaybackActivity for why playback goes through the web player rather than a
+  native extractor.
+
+  The page is bundled as an asset and loads over file://, so it is granted
+  universal access from file URLs. It renders on a black background and sizes the
+  player to the full viewport, since it is shown full-screen on a TV.
+-->
+<html lang="lv">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>LatvianTube</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            overflow: hidden;
+        }
+        #player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        #error {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            color: #eee;
+            font-family: sans-serif;
+            font-size: 22px;
+            text-align: center;
+            display: none;
+            padding: 0 40px;
+        }
+    </style>
+</head>
+<body>
+<div id="player"></div>
+<div id="error">Video nevar ielādēt.</div>
+
+<script>
+    // --- Query parsing -----------------------------------------------------
+    function parameter(name) {
+        var match = new RegExp('[?&]' + name + '=([^&#]*)').exec(window.location.search);
+        return match ? decodeURIComponent(match[1].replace(/\+/g, ' ')) : null;
+    }
+
+    var videoId = parameter('videoId');
+    var player = null;
+
+    // Playback quality ceiling.
+    //
+    // Measured on a Grundig Android TV (Arçelik SoC, Android 11): with the
+    // player free to choose, the WebView's Chromium renderer process burned
+    // 255% of the device's 400% total CPU, 86% of frames missed their deadline
+    // (90th percentile 46 ms, 99th 101 ms) and playback visibly stuttered.
+    //
+    // The SoC cannot decode and composite 1080p Chromium video in real time.
+    // Capping the requested quality trades resolution for smoothness, which on
+    // a TV at normal viewing distance is the right trade. Values YouTube accepts:
+    //   small (240p) < medium (360p) < large (480p) < hd720 < hd1080 < highres
+    var maxQuality = parameter('maxQuality') || 'hd720';
+
+    // YouTube resets quality on some state transitions, so re-apply on play.
+    function applyQualityCeiling() {
+        if (!player || typeof player.setPlaybackQualityRange !== 'function') {
+            return;
+        }
+        try {
+            player.setPlaybackQualityRange(maxQuality, maxQuality);
+        } catch (e) {
+            /* older players may not support the range API; the ceiling is a
+               best-effort optimisation and must never break playback */
+        }
+    }
+
+    function showError(message) {
+        document.getElementById('error').style.display = 'block';
+        if (message) {
+            document.getElementById('error').textContent = message;
+        }
+    }
+
+    // Exposed so the Android side can stop playback when the activity pauses;
+    // a WebView keeps playing audio otherwise.
+    window.latviantubePause = function () {
+        if (player && typeof player.pauseVideo === 'function') {
+            player.pauseVideo();
+        }
+    };
+
+    // --- IFrame API bootstrap ---------------------------------------------
+    // The API calls this global once it has loaded.
+    window.onYouTubeIframeAPIReady = function () {
+        if (!videoId) {
+            showError('Nav norādīts video ID.');
+            return;
+        }
+        player = new YT.Player('player', {
+            videoId: videoId,
+            playerVars: {
+                autoplay: 1,
+                controls: 1,
+                rel: 0,
+                modestbranding: 1,
+                // Ask YouTube for Latvian captions/UI where available, matching
+                // the app's language pinning.
+                hl: 'lv',
+                cc_lang_pref: 'lv',
+                playsinline: 1,
+                // The page is served from appassets.androidplatform.net via
+                // WebViewAssetLoader. Declaring the origin explicitly is what the
+                // IFrame API expects; without a real origin it fails with 153.
+                origin: window.location.origin
+            },
+            events: {
+                'onReady': function (event) {
+                    player = event.target;
+                    applyQualityCeiling();
+                },
+                'onStateChange': function (event) {
+                    // 1 === PLAYING
+                    if (event.data === 1) {
+                        applyQualityCeiling();
+                    }
+                },
+                'onError': function (event) {
+                    // YouTube renders its own localized error page for player
+                    // errors, so only surface ours if that page cannot appear.
+                    if (event.data === 5) {
+                        showError('Šo video nevar atskaņot HTML5 atskaņotājā.');
+                    }
+                }
+            }
+        });
+    };
+
+    if (!videoId) {
+        showError('Nav norādīts video ID.');
+    } else {
+        var script = document.createElement('script');
+        script.src = 'https://www.youtube.com/iframe_api';
+        script.onerror = function () {
+            showError('Neizdevās ielādēt YouTube atskaņotāju. Pārbaudiet interneta savienojumu.');
+        };
+        document.head.appendChild(script);
+    }
+</script>
+</body>
+</html>

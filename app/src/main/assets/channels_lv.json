@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-05",
+  "note": "Curated Latvian-language YouTube channels. This file is the authoritative seed list for LatvianTube and is shared by the Android app (app/src/main/assets/channels_lv.json) and the Node verification harness (tools/channel-registry.mjs). Membership is the strongest positive signal in the Latvian language gate, so every entry must be verified to actually publish Latvian-language video — see tools/verify-registry.mjs.",
+  "excluded": [
+    { "channelId": "UCqiHhRc5RGjaeFyFb4nSvFw", "title": "Delfi Lietuva", "reason": "Lithuanian-language broadcaster; surfaced by Latvian search but publishes in Lithuanian." },
+    { "channelId": "UCHRuhcGbOTX0TeBGZlI2Yww", "title": "Oga", "reason": "Resolved from a generic name search to a channel publishing German-language vlogs." },
+    { "channelId": "UCmbLaCRSxlMj9-lJRYYROiA", "title": "Latvijas Ziņas", "reason": "Despite the Latvian name, this channel publishes Russian-language news (\"Новости Латвии\"). Caught by tools/verify-registry.mjs at 0% admitted. This is precisely the case the language scope excludes." }
+  ],
+  "categories": [
+    {
+      "id": "zinas",
+      "titleLv": "Ziņas",
+      "titleEn": "News",
+      "channels": [
+        { "id": "UCOSAAyJoybqsY5sZ76BaqFA", "title": "LTV Ziņu dienests", "handle": "@ltvzinas" },
+        { "id": "UCWRVYOeeYW5aXmfDITB1cXw", "title": "Latvijas Radio", "handle": "@latvijasradio" },
+        { "id": "UCGurPg24yPfwehdLH2jSGbw", "title": "TVNET", "handle": "@tvnet" },
+        { "id": "UCClbgD_xABbIiTdZImVUWYA", "title": "LSM Portāls", "handle": "@lsmportals" },
+        { "id": "UCw5foWtcJvAbUm64rv7jwUQ", "title": "Delfi.lv", "handle": "@delfilatvia" }
+      ]
+    },
+    {
+      "id": "muzika",
+      "titleLv": "Mūzika",
+      "titleEn": "Music",
+      "channels": [
+        { "id": "UCCBPB26H9eZCxM0hkZfK5Qw", "title": "Lauris Reiniks", "handle": "@laurisreiniks" }
+      ]
+    },
+    {
+      "id": "sports",
+      "titleLv": "Sports",
+      "titleEn": "Sports",
+      "channels": [
+        { "id": "UCz1_E8ElZ6Y79ZuZ5cl2JNA", "title": "Latvijas futbols", "handle": "@LFFTV" },
+        { "id": "UCeG3mwJSasIPEPsZntwma_w", "title": "Latvijas Basketbola savienība", "handle": "@LatvijasBasketbolasavieniba" },
+        { "id": "UCrl2BpqxSoAaFpVvf80H__Q", "title": "Latvijas Hokeja Federācija", "handle": "@latvijashokejafederacija" },
+        { "id": "UCprBmkRWEpsp7pjfOzsUYYg", "title": "Latvijas Vieglatlētikas asociācija", "handle": "@athleticslv" }
+      ]
+    },
+    {
+      "id": "virtuve",
+      "titleLv": "Virtuve",
+      "titleEn": "Food",
+      "channels": [
+        { "id": "UC_LlHlfdxWhTgHuZhg0Kw_A", "title": "Gatis Lauva | Receptes", "handle": "@GatisLauva" },
+        { "id": "UC9kpWqQLr39uHA1UB2AXjDg", "title": "Receptes Video Virtuve", "handle": "@VideovirtuveLv" },
+        { "id": "UCjAyOuBGsbu-wJerQIK2nEw", "title": "Pa čīpo receptes", "handle": "@paciporeceptes800" }
+      ]
+    },
+    {
+      "id": "komedija",
+      "titleLv": "Komēdija",
+      "titleEn": "Comedy",
+      "channels": [
+        { "id": "UCM4rK-OuxIvMtyEaGdDwlSA", "title": "Comedy Latvia", "handle": "@ComedyLatvia" }
+      ]
+    },
+    {
+      "id": "izglitiba",
+      "titleLv": "Izglītība",
+      "titleEn": "Education",
+      "channels": [
+        { "id": "UCh1FFMxOpPg8Yzl0DookL0w", "title": "Latvijas Universitāte", "handle": "@latvijasuniversitate" }
+      ]
+    },
+    {
+      "id": "kino",
+      "titleLv": "Kino",
+      "titleEn": "Cinema",
+      "channels": [
+        { "id": "UCBWh0eD0WssdrkNaebeppjw", "title": "Apollo Kino Latvija", "handle": "@apollokinolatvija" }
+      ]
+    },
+    {
+      "id": "pilsetas",
+      "titleLv": "Pilsētas",
+      "titleEn": "Cities",
+      "channels": [
+        { "id": "UCnpNiIZTRDchM5GKm6faVWw", "title": "Rīga", "handle": "@riga" }
+      ]
+    }
+  ]
+}
