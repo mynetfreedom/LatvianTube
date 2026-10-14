@@ -39,4 +39,26 @@
     <string name="about_filter_title">Kā tiek atlasīts saturs</string>
     <string name="about_filter_body">LatvianTube rāda tikai video latviešu valodā. YouTube nesniedz uzticamu valodas lauku, tāpēc katrs video tiek novērtēts pēc vairākām pazīmēm: latviešu diakritiskajām zīmēm, latviešu palīgvārdiem un piederības koptajam kanālu sarakstam. Video kirilicā tiek noraidīti.</string>
 
+    <string name="playback_play">Atskaņot</string>
+    <string name="playback_pause">Pauze</string>
+    <string name="playback_seek">Pāriet uz citu vietu video</string>
+    <string name="playback_quality">Kvalitāte</string>
+    <string name="playback_quality_auto">Automātiski (līdz 720p)</string>
+    <string name="playback_retry">Mēģināt vēlreiz</string>
+    <string name="playback_extract_failed">Neizdevās iegūt video. Pārbaudiet savienojumu un mēģiniet vēlreiz.</string>
+    <string name="playback_youtube_blocked">YouTube pieprasa papildu pārbaudi. Mēģiniet vēlāk.</string>
+    <string name="playback_media_failed">Neizdevās atskaņot video. Mēģiniet vēlreiz vai izvēlieties citu kvalitāti.</string>
+    <string name="playback_no_decoder">Šajā ierīcē nav piemērota video dekodētāja.</string>
+    <string name="playback_sponsor_on">SponsorBlock: ieslēgts</string>
+    <string name="playback_sponsor_off">SponsorBlock: izslēgts</string>
+    <string name="playback_sponsor_unavailable">SponsorBlock nav pieejams. Video turpina atskaņoties.</string>
+    <string name="playback_sponsor_skipped">Sponsorētā daļa izlaista</string>
+    <string name="playback_offline_save">Saglabāt bezsaistē</string>
+    <string name="playback_offline_remove">Dzēst saglabāto video</string>
+    <string name="playback_offline_saving">Saglabā…</string>
+    <string name="playback_offline_saved">Video saglabāts bezsaistē</string>
+    <string name="playback_offline_failed">Neizdevās saglabāt vai dzēst video. Pārbaudiet savienojumu un brīvo vietu.</string>
+
+    <string name="playback_licenses">Licences un avoti</string>
+    <string name="playback_close">Aizvērt</string>
 </resources>

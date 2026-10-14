@@ -17,27 +17,34 @@ set -euo pipefail
 
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # The toolchain sits beside the project, in the workspace's .cache directory.
-TOOLCHAIN="${LATVIANTUBE_TOOLCHAIN:-$(cd "$PROJECT_DIR/.." && pwd)/.cache/toolchain}"
+TOOLCHAIN="${LATVIANTUBE_TOOLCHAIN:-$PROJECT_DIR/.cache/toolchain}"
+if [ -z "${LATVIANTUBE_TOOLCHAIN:-}" ] && [ ! -d "$TOOLCHAIN" ]; then
+  for candidate in "$PROJECT_DIR/../.cache/toolchain" "$PROJECT_DIR/../FirmenD/.cache/toolchain"; do
+    if [ -d "$candidate/android-sdk" ]; then TOOLCHAIN="$candidate"; break; fi
+  done
+fi
 AVD_NAME="${LATVIANTUBE_AVD:-latviantube_tv}"
 EMULATOR_PORT="${LATVIANTUBE_PORT:-5554}"
 DEVICE="emulator-$EMULATOR_PORT"
-APK="$PROJECT_DIR/app/build/outputs/apk/debug/app-debug.apk"
+APK="$PROJECT_DIR/app/build/outputs/apk/debug/LatvianTube_v.1.1.apk"
 ACTIVITY="lv.latviantube/.ui.browse.BrowseActivity"
 
 # ---------------------------------------------------------------------------
-# Environment. HOME is redirected deliberately: adb and the emulator otherwise
-# write to ~/.android, and keeping every path inside the project means this
-# script cannot disturb an existing Android Studio install.
+# Environment. SDK, AVD, Gradle and emulator settings use the local toolchain.
+# Existing toolchain ADB keys can be reused without changing HOME.
 # ---------------------------------------------------------------------------
 export JAVA_HOME="$TOOLCHAIN/jdk17"
 export ANDROID_HOME="$TOOLCHAIN/android-sdk"
 export ANDROID_USER_HOME="$TOOLCHAIN/android-user-home"
 export ANDROID_AVD_HOME="$TOOLCHAIN/android-avd"
 export GRADLE_USER_HOME="$TOOLCHAIN/gradle-home"
-export HOME="$TOOLCHAIN/home"
+export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
+if [ -f "$TOOLCHAIN/home/.android/adbkey" ]; then
+  export ADB_VENDOR_KEYS="${ADB_VENDOR_KEYS:-$TOOLCHAIN/home/.android/adbkey}"
+fi
 export PATH="$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator:$JAVA_HOME/bin:$PATH"
 
-mkdir -p "$ANDROID_USER_HOME" "$ANDROID_AVD_HOME" "$GRADLE_USER_HOME" "$HOME"
+mkdir -p "$ANDROID_USER_HOME" "$ANDROID_AVD_HOME" "$GRADLE_USER_HOME"
 
 die() { echo "error: $*" >&2; exit 1; }
 

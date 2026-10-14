@@ -1,33 +1,39 @@
 package lv.latviantube.ui.playback;
 
+import java.util.List;
 import lv.latviantube.data.model.Video;
 
-/**
- * The playback seam.
- *
- * <p>Defined now, implemented by exactly one class
- * ({@link PlaybackActivity}'s embedded WebView player), so that a native player
- * can be added later without the browse or search screens changing. This is the
- * same shape as SmartTube's {@code PlayerEngine} interface — an engine-agnostic
- * facade that the rest of the app talks to — but with one method instead of the
- * ~40 SmartTube needs for SABR, DASH, HLS, track selection, zoom, AFR and PiP.
- *
- * <p>Implementing this natively is the main piece of future work. It requires an
- * InnerTube player-response parser, signature / n-parameter handling, adaptive
- * manifest construction and a patched media player that can speak SABR. See
- * {@code ANALYSIS.md}, "Hard parts".
- */
+/** Native playback contract. Calls and listener delivery occur on the main thread. */
 public interface PlayerEngine {
+    final class Quality {
+        public final String id;
+        public final String label;
+        public Quality(String id, String label) { this.id = id; this.label = label; }
+    }
 
-    /** Start playing. */
+    interface Listener {
+        void onLoading(boolean loading);
+        void onReady();
+        void onError(int messageResource);
+        void onMessage(int messageResource);
+        void onOfflineChanged(boolean saved, boolean saving);
+    }
+
     void open(Video video);
-
     void play();
-
     void pause();
-
     void release();
-
-    /** True when the engine can report a playback position. */
+    boolean isPlaying();
     boolean supportsSeek();
+    long getPositionMs();
+    long getDurationMs();
+    void seekTo(long positionMs);
+    List<Quality> getQualities();
+    String getSelectedQuality();
+    void selectQuality(String id);
+    void setSponsorBlockEnabled(boolean enabled);
+    boolean isSponsorBlockEnabled();
+    boolean canSaveOffline();
+    void saveOffline();
+    void removeOffline();
 }

@@ -22,4 +22,26 @@
     <string name="about_filter_title">How content is selected</string>
     <string name="about_filter_body">LatvianTube shows only video in the Latvian language. YouTube does not supply a dependable language field, so every video is scored on several signals: Latvian diacritics, Latvian function words, and membership of the curated channel registry. Videos in Cyrillic are rejected.</string>
 
+    <string name="playback_play">Play</string>
+    <string name="playback_pause">Pause</string>
+    <string name="playback_seek">Seek</string>
+    <string name="playback_quality">Quality</string>
+    <string name="playback_quality_auto">Auto (up to 720p)</string>
+    <string name="playback_retry">Retry</string>
+    <string name="playback_extract_failed">Could not resolve this video. Check your connection and retry.</string>
+    <string name="playback_youtube_blocked">YouTube requires additional verification. Try again later.</string>
+    <string name="playback_media_failed">Playback failed. Retry or choose another quality.</string>
+    <string name="playback_no_decoder">No supported video decoder on this device.</string>
+    <string name="playback_sponsor_on">SponsorBlock: on</string>
+    <string name="playback_sponsor_off">SponsorBlock: off</string>
+    <string name="playback_sponsor_unavailable">SponsorBlock unavailable. Playback continues.</string>
+    <string name="playback_sponsor_skipped">Sponsor segment skipped</string>
+    <string name="playback_offline_save">Save offline</string>
+    <string name="playback_offline_remove">Delete saved video</string>
+    <string name="playback_offline_saving">Saving…</string>
+    <string name="playback_offline_saved">Video saved offline</string>
+    <string name="playback_offline_failed">Could not save or delete the video. Check your connection and free storage.</string>
+
+    <string name="playback_licenses">Licenses and sources</string>
+    <string name="playback_close">Close</string>
 </resources>

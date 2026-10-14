@@ -1,0 +1,25 @@
+LatvianTube native playback
+
+Original LatvianTube source: MIT (LatvianTube-MIT.txt).
+
+NewPipeExtractor v0.26.5 — Team NewPipe and contributors.
+GPL-3.0-or-later. APKs containing it are distributed under GPL terms.
+Full license: GPL-3.0.txt (bundled in this APK).
+Source: https://github.com/TeamNewPipe/NewPipeExtractor/tree/v0.26.5
+App source and build instructions: https://github.com/mynetfreedom/LatvianTube
+
+Media3 / ExoPlayer 1.4.1 — Android Open Source Project, Apache-2.0.
+OkHttp 4.12.0 — Square, Apache-2.0.
+Rhino 1.8.1 — Mozilla and contributors, MPL-2.0.
+jsoup 1.22.2 — Jonathan Hedley and contributors, MIT.
+nanojson — Matt Mastracci and Team NewPipe, MIT.
+Protobuf 4.35.1 — Google and contributors, BSD-3-Clause.
+jsr305 3.0.2 — JSR-305 contributors, BSD-3-Clause.
+
+SponsorBlock data — Ajay Ramachandran and contributors.
+https://sponsor.ajay.app
+CC BY-NC-SA 4.0: https://creativecommons.org/licenses/by-nc-sa/4.0/
+Ranges are filtered, merged, rounded to milliseconds, and may be saved locally.
+SponsorBlock does not endorse these changes.
+Lookups are off by default. Enabling them sends a four-character SHA-256
+video-ID prefix and your IP address to SponsorBlock.

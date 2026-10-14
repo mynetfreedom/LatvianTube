@@ -4,6 +4,11 @@ Target: `https://github.com/yuliskov/SmartTube` @ `486c493`
 Method: REA investigation discipline
 Date: recon performed 2026-05
 
+**Current playback update (2026-10-14):** the WebView engine described below has
+been replaced by Media3 / ExoPlayer and NewPipeExtractor v0.26.5. The original
+investigation remains historical evidence; its missing-extractor and playback
+limitations are superseded by §E12 and `README.en.md` → Native playback.
+
 ---
 
 ## 0. Routing: why REA's binary tooling was not used
@@ -402,7 +407,7 @@ which is expected.
 | View-contract separation | Simplified: UI → `ContentRepository` → `InnerTubeClient` | Keeps YouTube detail out of screens |
 | Row taxonomy driven by a mapping table | Categories driven by `channels_lv.json` | Adding a row is a JSON edit, not code |
 | `MediaServiceManager` as the single data seam | `ContentRepository` | One place where filtering is guaranteed |
-| Player as a swappable engine | `PlayerEngine` interface, 5 methods vs ~40 | One implementation today, replaceable later |
+| Player as a swappable engine | `PlayerEngine` implemented by `ExoPlayerEngine` | Native implementation replaced the original web activity |
 | Record everything | `RawRecorder` (raw body, status, bytes, ms) | A 400 or consent wall must never read as "no results" |
 | `MotherActivity` base | `MotherActivity` | One place for TV config-change handling |
 
@@ -474,3 +479,62 @@ Stated plainly, because each of these bounds a claim made above.
 9. **The vendored `exoplayer-amzn-2.10.6` and `leanback-1.0.0` trees were
    excluded from analysis** as third-party code. Statements about player
    behaviour describe SmartTube's use of them, not the libraries themselves.
+
+---
+
+### E12 — Native replacement of the embedded player (2026-10-14)
+
+**Implementation.** The bundled iframe page and WebKit dependency were removed.
+`PlaybackActivity` now uses `PlayerEngine`, implemented by `ExoPlayerEngine`
+(Media3 1.4.1). `StreamResolver` delegates client negotiation and signature / n
+handling to NewPipeExtractor **v0.26.5**, not SmartTube's absent submodule and not a
+new hand-written decipherer. Its GPL-3.0-or-later dependency was explicitly
+approved by the user; original MIT source and combined-APK distribution terms
+are distinguished in `THIRD_PARTY.md` and bundled notices.
+
+**Observed on the Android TV 14 arm64 emulator.** A curated LTV Ziņu dienests
+video, `rOhTU5K28R0` (“Liepājā daudzdzīvokļu mājas ūdenī konstatētas legionellas
+baktērijas”), played through `c2.goldfish.h264.decoder` and
+`c2.android.aac.decoder`, with Latvian captions. Native controls displayed an
+advancing position against the 3:21 duration. The quality chooser exposed AVC / VP9
+resolutions from 144p through 1080p; selecting 1080p retained the paused 0:16
+position. Play/pause and the SponsorBlock toggle were exercised.
+
+An explicit offline save of the 720p AVC variant completed with **28,669,011 video
+bytes**, **3,270,208 audio bytes**, **24,606 caption bytes**, and metadata. A fresh
+app launch with the emulator's HTTP proxy directed to the closed local port
+`127.0.0.1:9` reopened the cached card and logged
+`Preparing offline media, quality=720p · AVC`; frames and playback position
+advanced from local files. The previous proxy setting was restored immediately.
+This is an HTTP-connectivity failure test, not a physical network-disconnection
+or airplane-mode test.
+
+**Automated evidence.** Nine deterministic JVM tests cover extractor transport
+headers, request payloads, redirects, HTTP 429, sponsor action/range validation,
+overlap merging, seek boundaries, atomic two-track saves, incomplete audio,
+truncated ranges, corrupt local files, and invalid path IDs. One opt-in live test
+resolves a public video, fetches video/audio byte ranges, and saves complete media.
+It passed with the short public video `jNQXAC9IVRw` and separately with the LTV
+video above (including available Latvian captions). Android compilation succeeds;
+lint reports zero errors. `tools/validate_project.py` reports no errors.
+
+**Design limits.** Automatic direct-stream selection is a fixed compatible quality
+up to 720p, not bandwidth adaptation; manual selection reconstructs the media
+source while preserving position/pause. HLS/DASH playback is wired but was not
+exercised in this run. SponsorBlock's interval behavior is verified with fixtures;
+no claim is made that this LTV video had a real sponsor segment to skip. Downloads
+are explicit, app-private, complete before publication, and limited to on-demand
+direct streams, 2 GiB per item. They are not resumable and there is no offline
+library screen; reopening relies on cached content cards. No SmartTube SABR,
+account access, AFR, PiP, or full feature parity is claimed. Native performance on
+the Grundig TV and API 21 runtime behavior remain unmeasured.
+
+### E13 — Network installation on the user's physical TV (2026-10-14)
+
+The native build was installed over network ADB after the user accepted the TV's
+authorization prompt. The existing host ADB server could not connect despite a
+reachable TV TCP port; a separate local server on port 5038 succeeded. Installation
+used `adb install -r`, returned `Success`, and launched `BrowseActivity` with
+`Status: ok`. A subsequent process/activity check confirmed LatvianTube running
+in the foreground. This verifies installation and launch of the native build,
+not sustained native playback or performance on the physical TV.

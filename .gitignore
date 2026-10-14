@@ -7,6 +7,7 @@ build/
 captures/
 .externalNativeBuild
 .cxx
+.cache/
 *.apk
 *.ap_*
 *.dex
