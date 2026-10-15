@@ -23,8 +23,8 @@ Usage: ./install-tv.sh TV_IP[:PORT] [--no-build] [--no-launch]
        ./install-tv.sh TV_IP:CONNECT_PORT --pair TV_IP:PAIR_PORT [--no-build]
 
 Examples (replace the sample IP with your TV's actual address):
-  ./install-tv.sh 192.168.50.91:5555              Build, install, and launch
-  ./install-tv.sh 192.168.50.91:5555 --no-build   Install the existing APK (fastest)
+  ./install-tv.sh 192.168.xx.xxx              Build, install, and launch
+  ./install-tv.sh 192.168.xx.xxx --no-build   Install the existing APK (fastest)
 
 The port defaults to 5555. Your TV must already allow network ADB debugging.
 Keep the TV and computer on the same network and accept the TV's debugging prompt.
@@ -61,7 +61,7 @@ while [ "$#" -gt 0 ]; do
 done
 
 TV_ADDRESS="${TV_ADDRESS:-${LATVIANTUBE_TV:-}}"
-[ -n "$TV_ADDRESS" ] || { usage >&2; die "Supply your TV's full IPv4 address, e.g. 192.168.50.91:5555"; }
+[ -n "$TV_ADDRESS" ] || { usage >&2; die "Supply your TV's full IPv4 address, e.g. 192.168.xx.xxx"; }
 
 validate_address() {
     local endpoint="$1" ip port octet normalized_ip=""

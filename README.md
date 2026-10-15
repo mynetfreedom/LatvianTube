@@ -59,16 +59,16 @@ Atjaunināšana pāri esošai instalācijai darbojas, ja parakstīšanas atslēg
 Datoram un televizoram jābūt vienā tīklā. Televizorā ieslēdziet izstrādātāja
 opcijas un tīkla ADB atkļūdošanu. Ja opcijas ir paslēptas, sistēmas informācijas
 sadaļā vairākkārt nospiediet Android būves numuru. Televizora iestatījumos
-atrodiet tā faktisko IP adresi; zemāk ir piemērs ar `192.168.50.91`.
+atrodiet tā faktisko IP adresi; zemāk ir piemērs ar `192.168.xx.xxx`.
 
 ```bash
 cd ~/Desktop/LatvianTube
 
 # Uzbūvēt jaunāko APK, instalēt un atvērt lietotni
-./install-tv.sh 192.168.50.91:5555
+./install-tv.sh 192.168.xx.xxx
 
 # Ātrākais variants, ja APK jau ir uzbūvēts
-./install-tv.sh 192.168.50.91:5555 --no-build
+./install-tv.sh 192.168.xx.xxx --no-build
 ```
 
 Apstipriniet televizorā redzamo **Allow / Atļaut** atkļūdošanas pieprasījumu.
@@ -81,7 +81,7 @@ Ja ADB ziņo `No route to host`, lai gan TV ports ir sasniedzams, var izmantot
 atsevišķu lokālo ADB serveri:
 
 ```bash
-LATVIANTUBE_ADB_SERVER_PORT=5038 ./install-tv.sh 192.168.50.91:5555 --no-build
+LATVIANTUBE_ADB_SERVER_PORT=5038 ./install-tv.sh 192.168.xx.xxx --no-build
 ```
 
 Ja autorizācijas pieprasījums neparādās, televizora izstrādātāja opcijās izslēdziet
@@ -91,7 +91,7 @@ Televizoros ar bezvadu atkļūdošanas savienošanas kodu izmantojiet atsevišķ
 savienošanas un pieslēgšanās portus, ko parāda televizors:
 
 ```bash
-./install-tv.sh 192.168.50.91:CONNECT_PORT --pair 192.168.50.91:PAIR_PORT --no-build
+./install-tv.sh 192.168.xx.xxx:CONNECT_PORT --pair 192.168.xx.xxx:PAIR_PORT --no-build
 ```
 
 `CONNECT_PORT` un `PAIR_PORT` jāaizstāj ar īstiem skaitļiem. Pēc pieprasījuma
@@ -105,9 +105,9 @@ porta 5555 ieslēgšanai var būt vajadzīgs sākotnējs USB savienojums un
 Lejupielādējiet APK datorā, atveriet termināli mapē, kur tas saglabāts, un izpildiet:
 
 ```bash
-adb connect 192.168.50.91:5555
-adb -s 192.168.50.91:5555 install -r LatvianTube_v.1.1.apk
-adb -s 192.168.50.91:5555 shell am start -n lv.latviantube/.ui.browse.BrowseActivity
+adb connect 192.168.xx.xxx
+adb -s 192.168.xx.xxx install -r LatvianTube_v.1.1.apk
+adb -s 192.168.xx.xxx shell am start -n lv.latviantube/.ui.browse.BrowseActivity
 ```
 
 ## Satura atlase un valodas filtrs
